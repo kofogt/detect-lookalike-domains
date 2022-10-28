@@ -1,0 +1,143 @@
+import sys, operator
+
+def find_all(url, unique):
+    start = 0
+    while True:
+        start = unique.find(url, start)
+        if start == -1: return
+        yield start
+        start += len(url)
+
+def get_tld ():
+    list = [
+        (f'com'),
+        (f'co'),
+        (f'cm'),
+        (f'net'),
+        (f'org'),
+        (f'io'),
+        (f'biz'),
+        (f'company'),
+        (f'sa'),
+        (f'co.uk'),
+        (f'app'),
+        (f'xyz'),
+        (f'gov'),
+
+    ]
+    return list
+def generate_alternative_tlds(domain, naked, tld):
+
+    domains = []
+
+    alt_tlds = get_tld()
+
+    for alts in alt_tlds:
+        domains.append(( f'{naked}.{alts}'))
+
+    return domains
+
+def generate_with_suffixes(domain, naked):
+    domains = []
+    tld = get_tld()
+    suffixes = [
+        ( '-shop'),
+        ( '-login'),
+        ( '-logon'),
+        ( '-secure'),
+        ( '-website'),
+        ('-finance'),
+        ('-domain'),
+        ('-health'),
+        ('-news'),
+        ('-security'),
+    ]
+    tlds = get_tld()
+    for suffix in suffixes:
+        for tl in tld:
+            alt = f'{naked}{suffix}.{tl}'
+            domains.append((alt))
+
+    prefixes = [
+        ( 'my-'),
+        ( 'thedaily-'),
+        ( 'go-'),
+        ( 'cyber-'),
+        ( 'travel-logon-'),
+        ('login-')
+    ]
+
+    for prefix in prefixes:
+        for tl in tld:
+            alt = f'{prefix}{naked}.{tl}'
+            domains.append((alt))
+
+    return domains
+
+def check_availability(domain):
+    return True
+def generate_homoglyphs(domain, naked, tld):
+
+    replacers = [
+        ('ijarah','ijarahfinance'),
+        ('rn', 'm'),
+        ('l', 't'),
+        ('r', 'i'),
+        ('n', 'm'),
+        ('d', 'cl'),
+        ('vv', 'w'),
+        ('l', 'i'),
+        ('j', 'i'),
+        ('l', '1'),
+        ('o', 'c'),
+        ('u', 'v'),
+        ('nn', 'm'),
+        ('a','e'),
+        ('a','o'),
+        ('a','u'),
+        ('i','l'),
+        ('j','i'),
+        ('r','n'),
+        ('h','k'),
+        ('s','ss'),
+        ('u','v'),
+        ('e','o')
+
+    ]
+
+    domains = []
+    replacements = []
+    tlds = get_tld()
+    for search, replace in replacers:
+        for pos in list(find_all(search, naked)):
+            replacements.append((search, replace, pos ))
+        for pos in list(find_all(replace, naked)):
+            replacements.append((replace, search, pos))
+
+    for find, replace, pos in replacements:
+        for tl in tlds:
+            candidate = naked[:pos] + replace + naked[pos+len(find):]
+            domains.append((f'{candidate}.{tl}'))
+
+    return domains
+
+def main(domain, limit=10):
+    naked, _, tld = domain.rpartition('.')
+
+    domains = {}
+    selectors = {
+        'alttlds': generate_alternative_tlds(domain, naked, tld),
+        'homoglyphs': generate_homoglyphs(domain, naked, tld),
+        'suffixes': generate_with_suffixes(domain, naked),
+
+    }
+    for kind in selectors.keys():
+        domains[kind] = []
+
+    for key in selectors.items():
+        print (f'{key}' )
+        for domain in key:
+            print (f'{domain}')
+
+if __name__ == '__main__':
+    main("kofogt.com")
