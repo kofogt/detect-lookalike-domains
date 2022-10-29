@@ -1,8 +1,9 @@
-import sys, operator
+import operator
 
 
 class lookalikedomain:
-    def find_all(self, url, unique):
+    @staticmethod
+    def find_all(url, unique):
         start = 0
         while True:
             start = unique.find(url, start)
@@ -11,7 +12,8 @@ class lookalikedomain:
             yield start
             start += len(url)
 
-    def get_suffix(self):
+    @staticmethod
+    def get_suffix():
         suffixes = [
             ("-shop"),
             ("-login"),
@@ -26,7 +28,8 @@ class lookalikedomain:
         ]
         return suffixes
 
-    def get_prefixes(self):
+    @staticmethod
+    def get_prefixes():
         prefixes = [
             ("my-"),
             ("thedaily-"),
@@ -37,7 +40,8 @@ class lookalikedomain:
         ]
         return prefixes
 
-    def get_tld(self):
+    @staticmethod
+    def get_tld():
         list = [
             (f"com"),
             # (f'co'),
@@ -56,7 +60,8 @@ class lookalikedomain:
         ]
         return list
 
-    def get_replacers(self):
+    @staticmethod
+    def get_replacers():
         replacers = [
             ("ijarah", "ijarahfinance"),
             ("rn", "m"),
@@ -114,7 +119,8 @@ class lookalikedomain:
 
         return domains
 
-    def check_availability(self, domain):
+    @staticmethod
+    def check_availability(domain):
         return True
 
     def generate_homoglyphs(self, domain, naked):

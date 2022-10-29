@@ -1,8 +1,10 @@
-import domain_impersonation_check, whois21
+import domain_impersonation_check
+import whois21
 
 
 class validate_domain:
-    def add_domain(self, url="google.com"):
+    @staticmethod
+    def add_domain(url="google.com"):
         domains = domain_impersonation_check.lookalikedomain()
         return domains.main(url)
 
