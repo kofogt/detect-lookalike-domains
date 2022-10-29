@@ -3,7 +3,7 @@ import whois21
 
 
 class validate_domain:
-    @staticmethod
+
     def add_domain(url="google.com"):
         domains = domain_impersonation_check.lookalikedomain()
         return domains.main(url)
