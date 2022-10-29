@@ -1,9 +1,8 @@
 import operator
 
 
-class lookalikedomain():
-
-    def find_all(self,url, unique):
+class lookalikedomain:
+    def find_all(self, url, unique):
         start = 0
         while True:
             start = unique.find(url, start)
@@ -11,7 +10,6 @@ class lookalikedomain():
                 return
             yield start
             start += len(url)
-
 
     def get_suffix():
         suffixes = [
@@ -28,7 +26,6 @@ class lookalikedomain():
         ]
         return suffixes
 
-
     def get_prefixes():
         prefixes = [
             ("my-"),
@@ -39,7 +36,6 @@ class lookalikedomain():
             ("login-"),
         ]
         return prefixes
-
 
     def get_tld():
         list = [
@@ -59,7 +55,6 @@ class lookalikedomain():
             # (f'gov'),
         ]
         return list
-
 
     def get_replacers():
         replacers = [
