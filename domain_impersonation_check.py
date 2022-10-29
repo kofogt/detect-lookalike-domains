@@ -38,18 +38,19 @@ class lookalikedomain():
     def get_tld (self):
         list = [
             (f'com'),
-            (f'co'),
-            (f'cm'),
+            # (f'co'),
+            # (f'cm'),
             (f'net'),
-            (f'org'),
-            (f'io'),
-            (f'biz'),
-            (f'company'),
-            (f'sa'),
-            (f'co.uk'),
-            (f'app'),
-            (f'xyz'),
-            (f'gov'),
+            (f'edu'),
+            # (f'org'),
+            # (f'io'),
+            # (f'biz'),
+            # (f'company'),
+            # (f'sa'),
+            # (f'co.uk'),
+            # (f'app'),
+            # (f'xyz'),
+            # (f'gov'),
 
         ]
         return list
@@ -140,7 +141,7 @@ class lookalikedomain():
         count = 1
         for ommission in naked:
             for tl in tld:
-                if count < len(naked):
+                if (count < len(naked)):
                     naked_url = naked[count:]
                     domain.append((f'{naked_url}.{tl}'))
                     count = count+1
@@ -161,4 +162,5 @@ class lookalikedomain():
         return selectors
 
 test = lookalikedomain()
-print(test.main("elistatus.com"))
+
+
